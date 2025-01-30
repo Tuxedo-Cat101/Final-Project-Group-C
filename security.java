@@ -1,4 +1,3 @@
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
@@ -24,32 +23,55 @@ public class security {
         return null;
     }
 
-    public static void main(String[] args) {
-        // Correct encrypted password
-        String correctEncryptedPassword = encryptPassword("PointBreak");
+    // Method to check password strength
+    public static boolean isPasswordStrong(String password) {
+        // Password strength criteria: at least 8 characters, contains letters and numbers
+        return password.length() >= 8 && password.matches(".*[a-zA-Z].*") && password.matches(".*\\d.*");
+    }
 
+    // Method to simulate storing users' encrypted passwords (for example, in a database)
+    public static String getCorrectEncryptedPassword() {
+        return encryptPassword("PointBreak47!x");
+    }
+
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // Asking the user for the password
-        System.out.print("Shall we play a game?: ");
-        String inputPassword = scanner.nextLine();
+        // Number of allowed attempts
+        int maxAttempts = 3;
+        int attemptsLeft = maxAttempts;
 
-        // Encrypting the input password and comparing it with the correct encrypted password
-        if (encryptPassword(inputPassword).equals(correctEncryptedPassword)) {
-            // Password is correct
-            System.out.println("Access granted...");
-            // Here, you can implement the code to show your content
-            // For example, you could load a new page or display a message
+        // Correct encrypted password (in real scenarios, this would come from a database)
+        String correctEncryptedPassword = getCorrectEncryptedPassword();
 
-            // For demonstration, we're printing a success message
-            System.out.println("Welcome nerds");
-        } else {
-            // Password is incorrect
-            System.out.println("Incorrect... SPY");
-            // Optionally, you can call the main method again for retry
-            main(args);  // Recursive call for retry
+        // Give the user a chance to input password
+        while (attemptsLeft > 0) {
+            System.out.print("Password: ");
+            String inputPassword = scanner.nextLine();
+
+            // Check if the password is strong
+            if (!isPasswordStrong(inputPassword)) {
+                System.out.println("Password is weak. It must contain at least 8 characters, including letters and numbers.");
+                continue; // Skip this iteration and ask for a new password
+            }
+
+            // Encrypt the input password and compare it with the correct encrypted password
+            if (encryptPassword(inputPassword).equals(correctEncryptedPassword)) {
+                System.out.println("Accessing WOPR...");
+                System.out.println("Greetings Professor Falken, Shall we play a game? ");
+                break; // Exit the loop if password is correct
+            } else {
+                attemptsLeft--;
+                if (attemptsLeft > 0) {
+                    System.out.println("Incorrect password. You have " + attemptsLeft + " attempts left.");
+                } else {
+                    System.out.println("Incorrect password. No attempts left.");
+                    // Optionally, you can exit or lock the user out at this point
+                }
+            }
         }
 
+        // Close scanner resource
         scanner.close();
     }
 }
