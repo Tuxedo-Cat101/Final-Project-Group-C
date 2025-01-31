@@ -64,7 +64,9 @@ public class base {
                             day = scanner.nextInt();
                             scanner.nextLine();
         //Serial Number is to be incremented by 1 from the previous serial #, must be unique for each astro
-                            System.out.println();
+                            System.out.println("Please enter a valid Email: ");
+
+                            System.out.println("Please ");
                             break;
                         //edit astro by selected serial #
                         case 2:
@@ -102,10 +104,12 @@ public class base {
                     if (exitconfromation == 2){
                         exit = false;
                     }
-                       if (exitconfromation != 1 || exitconfromation != 2){
-                        System.out.println("False option, try again");
+                    if (exitconfromation != 1 && exitconfromation != 2){
+                        System.out.println("Invalid option, try again");
                         System.out.println("Are you sure you want to exit?");
                         System.out.println("Enter 1 for yes, & 2 for no.");
+                        exitconfromation = scanner.nextInt();
+                        scanner.nextLine();
                        }
                     break;
 
