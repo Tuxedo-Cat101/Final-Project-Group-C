@@ -1,11 +1,11 @@
 public class launch {
-    public static void main(String[] args) {
+    public void launchCountdown() {
         int timer = 10; 
         System.out.println("T-Minus " + timer + ".");
         while (timer > 0) {
             try {
             
-                Thread.sleep(2000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -14,7 +14,6 @@ public class launch {
 
             System.out.println(timer);
         }
-        System.out.println(timer);
 
         System.out.println("The spaceship has launched!");
     }

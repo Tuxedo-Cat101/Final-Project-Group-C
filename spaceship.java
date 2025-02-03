@@ -1,15 +1,12 @@
 import java.util.Scanner;
 
-class spaceship {
+public class spaceship {
 
     String name;
-    int capacity;
+    double capacity;
 
    
-    spaceship(String name, int capacity) {
-        this.name = name;
-        this.capacity = capacity;
-    }
+    
 
     // Method to display ship details
     void displayShipDetails() {
@@ -30,7 +27,11 @@ class spaceship {
        
         displayShipDetails();
     }
-    void loadFuel() {
-        
+    //Loads fuel onto spacecraft
+    public Double loadFuel(double fuelCapacity, double fuelAmount, double currentFuel) {
+        double fuel;
+        fuel = Math.min(currentFuel + fuelAmount, fuelCapacity);
+        currentFuel = fuel;
+        return fuel;
     }
 }

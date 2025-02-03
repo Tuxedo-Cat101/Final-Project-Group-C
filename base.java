@@ -22,9 +22,18 @@ public class base {
         int innerChoice;
         int exitconfromation;
         int removalconfromation;
-        String spaceshipName;
-        Double fuelCapacity;
+        String spaceshipName = "";
+        Double fuelCapacity = 0.0;
+        int spaceshipNum = 0;
+        int shipSelector;
+        double fuelAmount;
+        double currentFuel = 0.0;
+        
         regexverifier rgx = new regexverifier();
+        astronaut astro = new astronaut();
+        spaceship spaceship = new spaceship();
+        launch launch = new launch();
+        
 //Password  
         //First run generates password
         //2nd Prompts for it
@@ -115,22 +124,35 @@ public class base {
                             break;
                         //edit astro by selected serial #
                         case 2:
-                        
+                            System.out.println("Please enter the serial number of the astronaut you wish to edit.");
+
+                            
                             break;
                         //remove astro data but request confirmation
                         case 3:
                             System.out.println("Select the astronaut you wish to remove");
 
-                            
+                            //area to select who is removed, write when save if figured out
+
                             System.out.println("Are you Sure, 1 for yes, 2 for no.");
                             removalconfromation = scanner.nextInt();
                             scanner.nextLine();
+                            if (removalconfromation == 1) {
+                                //remove info
+                            }
+                            if (removalconfromation == 2) {
+                                //back to removal menu
+                            }
+                            if (removalconfromation != 1 && removalconfromation != 2){
+                                System.out.println("Thats not a valid choice");
+                                //loop back to yes=1 and no=2
+                            }
                             break;
                         case 4:
-
                             break;
                     }
                     break;
+                //SPACESHIP MANAGEMENT
                 //Spaceship Options, 1.Add Spaceship 2.Assign Astros 3.Load Fuel
                 case 2:
                 System.out.println("Menu: \n1. Add Spaceship \n2. Assign Astros \n3. Load Fuel");
@@ -142,21 +164,57 @@ public class base {
                         scanner.nextLine();
                     }
                     switch (innerChoice){
+                        //Add spaceship: get name, fuel capacity;
                         case 1:
                             System.out.println("Enter spaceship name: ");
                             spaceshipName = scanner.nextLine();
                             System.out.println("Enter the spaceships fuel capacity in pounds: ");
                             fuelCapacity = scanner.nextDouble();
                             break;
+                        //Add astros function
                         case 2:
-                            System.out.println("");
+                            System.out.println("Select spaceship to load astronauts onto:");
+                            i = 0;
+                            while(i < spaceshipNum){
+                            System.out.println((i+1)+". "+spaceshipName);
+                            i++;
+                            }
+                            shipSelector = scanner.nextInt();
+                            scanner.nextLine();
+                            
+
+                            break;
+                        //Fuels ship based on input with method in spaceship
+                        case 3:
+                            System.out.println("Select ship to fuel: ");
+                            i = 0;
+                            while (i < spaceshipNum){
+                            System.out.println(spaceshipNum+". "+spaceshipName);
+                            }
+                            shipSelector = scanner.nextInt();
+                            scanner.nextLine();
+                            System.out.println("How much fuel do you want to put into "+spaceshipName+": ");
+                            fuelAmount = scanner.nextDouble();
+                            spaceship.loadFuel(fuelCapacity, fuelAmount, currentFuel);
+                            System.out.println(spaceshipName+" has been fueled. Current fuel level: "+currentFuel+" pounds. ");
                             break;
                     
                     }
 
                 break;
+                //Launch Process
+                //Launch Countdown for a selected spaceship
+                //Countdown from 10 to 0 before launch.
                 case 3:
-
+                System.out.println("Select ship to launch: ");
+                    i = 0;
+                    while (i < spaceshipNum){
+                        System.out.println(spaceshipNum+". "+spaceshipName);
+                        i++;
+                        }
+                    shipSelector = scanner.nextInt();
+                    scanner.nextLine();
+                    launch.launchCountdown();
                     break;
                 //exit conformation
                 case 4:
@@ -179,12 +237,8 @@ public class base {
                        }
                     break;
 
-//SPACESHIP MANAGEMENT
-    //Add spaceship: get name, fuel capacity;
-    //Add astros function and load fuel
-//Launch Process
-    //Countdown from 10 to 0 before launch.
-    //
+
+
 //Space walk: when rocket above 70,000m, start 30sec timer(astros do spacewalk in said time.)
 //Return to earth: Gravity, burn-up, parachute.
             }
