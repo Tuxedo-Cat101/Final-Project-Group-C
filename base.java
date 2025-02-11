@@ -170,6 +170,7 @@ public class base {
                             spaceshipName = scanner.nextLine();
                             System.out.println("Enter the spaceships fuel capacity in pounds: ");
                             fuelCapacity = scanner.nextDouble();
+
                             break;
                         //Add astros function
                         case 2:
@@ -215,6 +216,15 @@ public class base {
                     shipSelector = scanner.nextInt();
                     scanner.nextLine();
                     launch.launchCountdown();
+                    System.out.println(launch.launch(fuelCapacity, currentFuel));
+                    System.out.println("Press Enter to start spacewalk: ");
+                    scanner.nextLine();
+                    launch.SpaceWalk();
+                    System.out.println("Preparing ship returnal, Press Enter to start re-entry to Earth");
+                    scanner.nextLine();
+                    System.out.print(launch.returnal());
+                    
+                    
                     break;
                 //exit conformation
                 case 4:

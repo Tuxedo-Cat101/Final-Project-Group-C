@@ -1,0 +1,48 @@
+Astronaut information
+
+(name, Address, Email, NextOfKin, Status;
+double DateOfBirth, SerialNumber, PhoneNumber, PayRate, Weight)
+
+Astronaut: Jordan Mason
+Address: 566 YourMom St.
+Email: AwesomeMan00@email
+NextOfKin: Kyle Mason
+Status: Earth
+DOB: 10/10/1985
+SerialNumber: 3567896541256325
+PhoneNumber: (989) 465-8776
+PayRate: 48$ per hour
+Weight: 157
+
+Astronaut: Jose Ernesto
+Address: 478 Okay Ave.
+Email: IDKAnymor76@email
+NextOfKin: Nom Nom Guy
+Status: Earth
+DOB: 12/1/1999
+SerialNumber: 3567896541256325
+PhoneNumber: (989) 985-8554
+PayRate: 48$ per hour
+Weight: 176
+ 
+Astronaut: Promethius
+Address: 32 Athena Dr.
+Email: Ajgfdffdkjsf0@email
+NextOfKin: 
+Status: Earth
+DOB: 10/10/1985
+SerialNumber: 3567896541256325
+PhoneNumber: (989) 465-8776
+PayRate: 48$ per hour
+Weight: 157
+
+
+
+cVkut04pQd1MuXWPaWbg3A8Ygh8a40QTr1agL4fqrzNCTbc0rJ67FVEYn3Y4ePB//EafXyuPiH9n9VnGHojaQr3qJp842B/ob7AYP8NQ3h1OsF
+ol89kruz8MM1XXcpfn/iIqhJbfkGU5dw4ay07Gviy1YzwiA0tmrX21vuHGXfdvEKExiAhYUKyZp4Ncn8MuukTn/1zCENi/nQSXyqKSd0MMQ4MzBROSn
+rOyLs/oYnXDajCVcj4TrS0KEux2N/42c+uVgTTPboGYJxFkeqL0pYpWGbj1bIZN7MiwmuN+YE/bJHsVX+6/RpPjGlwt8ngKa4RfjHkLhQDA+MsEAGT
+DEeecLczNWXrKe9fgJHRA308UzTcJ07OnaiUoPEe+oTVjl2HfgT4N0jXUMdju1UPlxVF6JreOg72SkxvazguBKd/D7/aY9SGg0xTj3f17phfpKzht
+j74s1Qz5LBmKoDIGLQD+t2Cfiph9OCnQRs8A5xeHrCV8uUEKHN0bQydPp6V3VnZuIc2gmnJLxZwuNJcY+4d7tcjnN7MQouaYwAaWxz0f8NiyYo43N
+uBbNzseatHYAtVWsH1WmVUVvgGZU9I7vRvcwZJGY8nzY99YkZhoL9mlGAW/yjZBthX6uhhqZxj422HRGJZlm91V4MdYTiv3wAyQFXpLiVe2iONMwZOz
+craA1uViZZbuTkEqpZ3To14guY4O0MTVmHuYbNLiDsLkyZstYzANCA8SWsm/LpUgnM4k5xKKqh81ZGlNlEGQWCwlD5gI8y+iqjgmaGxLWdnkIu9H2a0
+kp/QDW9o+O+4GdSf76TfsHfo3d5770yr0XTkQYKbu2E4IlrdLrtDnU2yaye5Yehqj5Z7skgWjha5WrLphzkEv/ecnjZzKa9iWWbZsPfetHXST5kIWWrdmeq0+Q==
