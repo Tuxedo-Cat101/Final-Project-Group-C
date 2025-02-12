@@ -2,7 +2,6 @@
 import java.util.Scanner;
 
 public class base {
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String name;
@@ -52,7 +51,6 @@ public class base {
             scanner.nextLine();
             switch (choice) {
                 //ASTRO INFO
-                
                 case 1:
                     System.out.println("Menu: \n1. Add Astronaut \n2. Edit Astronaut \n3. Remove Astronaut \n4. Return to Menu");
                         innerChoice = scanner.nextInt();
@@ -131,9 +129,8 @@ public class base {
                         //remove astro data but request confirmation
                         case 3:
                             System.out.println("Select the astronaut you wish to remove");
-
                             //area to select who is removed, write when save if figured out
-
+                            
                             System.out.println("Are you Sure, 1 for yes, 2 for no.");
                             removalconfromation = scanner.nextInt();
                             scanner.nextLine();
@@ -170,7 +167,6 @@ public class base {
                             spaceshipName = scanner.nextLine();
                             System.out.println("Enter the spaceships fuel capacity in pounds: ");
                             fuelCapacity = scanner.nextDouble();
-
                             break;
                         //Add astros function
                         case 2:
@@ -182,8 +178,6 @@ public class base {
                             }
                             shipSelector = scanner.nextInt();
                             scanner.nextLine();
-                            
-
                             break;
                         //Fuels ship based on input with method in spaceship
                         case 3:
@@ -199,13 +193,14 @@ public class base {
                             spaceship.loadFuel(fuelCapacity, fuelAmount, currentFuel);
                             System.out.println(spaceshipName+" has been fueled. Current fuel level: "+currentFuel+" pounds. ");
                             break;
-                    
                     }
 
                 break;
                 //Launch Process
                 //Launch Countdown for a selected spaceship
                 //Countdown from 10 to 0 before launch.
+                //Space walk: when rocket above 70,000m, start 30sec timer(astros do spacewalk in said time.)
+                //Return to earth: Gravity, burn-up, parachute.
                 case 3:
                 System.out.println("Select ship to launch: ");
                     i = 0;
@@ -223,8 +218,6 @@ public class base {
                     System.out.println("Preparing ship returnal, Press Enter to start re-entry to Earth");
                     scanner.nextLine();
                     System.out.print(launch.returnal());
-                    
-                    
                     break;
                 //exit conformation
                 case 4:
@@ -246,11 +239,6 @@ public class base {
                         scanner.nextLine();
                        }
                     break;
-
-
-
-//Space walk: when rocket above 70,000m, start 30sec timer(astros do spacewalk in said time.)
-//Return to earth: Gravity, burn-up, parachute.
             }
         } while (exit != true);
     }

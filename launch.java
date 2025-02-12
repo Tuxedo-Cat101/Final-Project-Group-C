@@ -2,26 +2,22 @@ public class launch {
 
     double speed = 0;
     double altitude = 0;
-
+    //Starts 10 Second Countdown
     public void launchCountdown() {
         int timer = 10; 
         System.out.println("T-Minus " + timer + ".");
         while (timer > 0) {
             try {
-            
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
             timer--;
-
             System.out.println(timer);
         }
-
         System.out.println("The spaceship has launched!");
     }
-
+    //Launches Spacecraft and calculates its altitude/speed.
     public String launch(Double fuelCapactiy, Double currentFuel){
         int second = 0;
         speed = 0;
@@ -41,33 +37,29 @@ public class launch {
     {
         Thread.currentThread().interrupt();
     }
-        
         }
         if (currentFuel > 0) {
         return "Spacecraft ran out of fuel before it could reach space";
         }
         return "Spacecraft successfully reached space, spacewalk can now be executed.";
     }
-
+    //Starts spacewalk and counts for 30 secs.
     public void SpaceWalk(){
         System.out.println("Starting 30 second spacewalk: ");
         int timer = 30; 
         System.out.println("T-Minus " + timer + ".");
         while (timer > 0) {
             try {
-            
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
             timer--;
-
             System.out.println(timer);
         }
         System.out.println("Spacewalk Completed. ");
     }
-
+    //Begins returnal of spacecraft back to Earth, deploys parachute at 10000 meters.
     public String returnal(){
         int second = 0;
         speed = 0;
@@ -105,6 +97,6 @@ public class launch {
     if (speed > 3000){
     return "Spacecraft burned up on re-entry.";
     }
-    return "Spacecraft successfully landed back on Earth \nMission Success";
+    return "The ship has landed safely. Astronauts may exit. \nMission Success";
 }
 }
