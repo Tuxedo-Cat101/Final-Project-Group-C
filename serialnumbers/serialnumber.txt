@@ -1,2 +1,0 @@
- File myObj = new File(path/to/folder,"filename.txt");
-                        /serialnumbers/, "serialnumber.getnumber().txt"

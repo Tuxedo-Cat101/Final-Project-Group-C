@@ -6,7 +6,7 @@ public class base {
         String name;
         String DateOfBirth;
         int year, month, day;
-        double SerialNumber;
+        String SerialNumber;
         String Address;
         String Email;
         String PhoneNumber;
@@ -31,6 +31,8 @@ public class base {
         astronaut astro = new astronaut();
         spaceship spaceship = new spaceship();
         launch launch = new launch();
+        datastore2 data = new datastore2();
+        SerialNumber = data.getserialnumber();
         
 //Password  
         //First run generates password
