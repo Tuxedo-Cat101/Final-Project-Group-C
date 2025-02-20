@@ -33,7 +33,7 @@ public class MainFrame_copy_copy extends JFrame {
         taMessage = new JTextArea();
         taMessage.setFont(mainFont);
         taMessage.setEditable(false);
-        taMessage.setText("Opening Joshua...\nUser or Admin Mode.");
+        taMessage.setText("Identification needed \nUser or Admin Mode.");
         JScrollPane scrollPane = new JScrollPane(taMessage);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
 
@@ -81,7 +81,7 @@ private void handleUserMode() {
     } else {
         String enteredPassword = JOptionPane.showInputDialog(this, "Enter password:");
         if (verifyUserPassword(enteredPassword)) {
-            taMessage.append("Access granted... Accessing W.O.P.R\n");
+            taMessage.append("Access granted... Accessing: \n");
         } else {
             taMessage.append("Incorrect password. Access denied.\n");
         }
@@ -205,9 +205,9 @@ private void handleUserMode() {
 
     // Reset the user password by the admin
     public void resetUserPassword() {
-        String newPassword = JOptionPane.showInputDialog(this, "Play Thermonuclear War?: ");
+        String newPassword = JOptionPane.showInputDialog(this, "New Password: ");
         storeUserPassword(newPassword);
-        taMessage.append("A strange game. The winning move is not to play \n");
+        taMessage.append("Password changed \n");
     }
 
     public static void main(String[] args) {
