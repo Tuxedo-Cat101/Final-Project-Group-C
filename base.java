@@ -1,10 +1,13 @@
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class base {
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String name;
-        String DateOfBirth = "0/0/0000";
+        String DateOfBirth;
         int year, month, day;
         String SerialNumber;
         String Address;
@@ -16,7 +19,7 @@ public class base {
         String Status;
         int i = 0;
         boolean exit = false;
-        int choice;
+        int choice = 0;
         int innerChoice;
         int exitconfromation;
         int removalconfromation;
@@ -26,14 +29,13 @@ public class base {
         int shipSelector;
         double fuelAmount;
         double currentFuel = 0.0;
-        
+
         regexverifier rgx = new regexverifier();
         astronaut astro = new astronaut();
         spaceship spaceship = new spaceship();
         launch launch = new launch();
         datastore2 data = new datastore2();
-        SerialNumber = data.getSerialNumber();
-        
+
 //Password  
         //First run generates password
         //2nd Prompts for it
@@ -42,26 +44,31 @@ public class base {
         do {
             System.out.println("Menu: \n1. Astronaut Options \n2. Spaceship Options \n3. Start Launch Countdown \n4. Exit Application");
 //Get choice
-            choice = scanner.nextInt();
-            if (choice <= 0 || choice > 5){
-            System.out.println("Invalid Choice Selection");
-            System.out.println("Menu: \n1. Astronaut Options \n2. Spaceship Options \n3. Start Launch Countdown \n4. Exit Application");
-            choice = scanner.nextInt();
-            scanner.nextLine();
+            try {
+                choice = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                scanner.nextLine();
+            }
+            
+            if (choice <= 0 || choice > 5) {
+                System.out.println("Invalid Choice Selection");
+                System.out.println("Menu: \n1. Astronaut Options \n2. Spaceship Options \n3. Start Launch Countdown \n4. Exit Application");
+                choice = scanner.nextInt();
+                scanner.nextLine();
             }
             scanner.nextLine();
             switch (choice) {
                 //ASTRO INFO
                 case 1:
                     System.out.println("Menu: \n1. Add Astronaut \n2. Edit Astronaut \n3. Remove Astronaut \n4. Return to Menu");
-                        innerChoice = scanner.nextInt();
-                        scanner.nextLine();
-                    if (choice <= 0 || choice > 4){
+                    innerChoice = scanner.nextInt();
+                    scanner.nextLine();
+                    if (choice <= 0 || choice > 4) {
                         System.out.println("Menu: \n1. Add Astronaut \n2. Edit Astronaut \n3. Remove Astronaut \n4. Return to Menu");
                         innerChoice = scanner.nextInt();
                         scanner.nextLine();
                     }
-                    switch (innerChoice){
+                    switch (innerChoice) {
                         //Ask for name, date of birth, serial #, address, email, phone #, pay rate, weight, next of kin, status(in space or on Earth).
                         //Add astro and validate inputs
                         case 1:
@@ -70,7 +77,7 @@ public class base {
                             System.out.println("Please enter the year(ex: 1986) the astronaut was born: ");
                             year = scanner.nextInt();
                             scanner.nextLine();
-                            while (year < 1900){
+                            while (year < 1900) {
                                 System.out.println("Invalid year, please enter a valid year: ");
                                 year = scanner.nextInt();
                                 scanner.nextLine();
@@ -79,42 +86,44 @@ public class base {
                             month = scanner.nextInt();
                             scanner.nextLine();
                             while (0 >= month || month > 12) {
-                            System.out.println("Invalid month choice, month must be between 1 and 12, please enter a valid month: ");
-                            month = scanner.nextInt();
-                            scanner.nextLine();
+                                System.out.println("Invalid month choice, month must be between 1 and 12, please enter a valid month: ");
+                                month = scanner.nextInt();
+                                scanner.nextLine();
                             }
                             System.out.println("Please enter the day the astronaut was born on:");
                             day = scanner.nextInt();
                             scanner.nextLine();
-                            while (day < 1 || day > 31){
-                            System.out.println("Invalid day, day must be between 1-31, please enter a valid day: ");
-                            day = scanner.nextInt();
-                            scanner.nextLine();
-                        }
-                        DateOfBirth = String.format("%02d/%02d/%04d", month, day, year);
-                        
+                            while (day < 1 || day > 31) {
+                                System.out.println("Invalid day, day must be between 1-31, please enter a valid day: ");
+                                day = scanner.nextInt();
+                                scanner.nextLine();
+                            }
+                            DateOfBirth = String.format("%02d/%02d/%04d", month, day, year);
+
                             System.out.println("Please enter the astronauts address: ");
                             Address = scanner.nextLine();
-        //Serial Number is to be incremented by 10 from the previous serial #, must be unique for each astro
-                            System.out.println("Serial Number: "+ data.getSerialNumber());
-                            System.out.println("Please enter a valid Email: ");
+                            //Serial Number is to be incremented by 10 from the previous serial #, must be unique for each astro
+                            SerialNumber = data.getSerialNumber();
+                            System.out.println("Serial Number: " + SerialNumber);
+
+                            System.out.println("Please enter the astronauts Email: ");
                             Email = scanner.nextLine();
-                            while (rgx.isEmailValid(Email) == false){
-                            System.out.println("Invalid Email, please enter a valid Email: ");
-                            Email = scanner.nextLine();
+                            while (rgx.isEmailValid(Email) == false) {
+                                System.out.println("Invalid Email, please enter a valid Email: ");
+                                Email = scanner.nextLine();
                             }
-                            System.out.println("Please enter a valid phone number: ");
+                            System.out.println("Please enter the astronauts phone number: ");
                             PhoneNumber = scanner.nextLine();
-                            while (rgx.isValidPhoneNumber(PhoneNumber) == false){
+                            while (rgx.isValidPhoneNumber(PhoneNumber) == false) {
                                 System.out.println("Invalid Phone Number, please enter a valid Phone Number: ");
                                 PhoneNumber = scanner.nextLine();
                             }
-                            System.out.println("Please enter the new astronauts payrate: ");
+                            System.out.println("Please enter the astronauts payrate: ");
                             PayRate = scanner.nextLine();
-                            while (rgx.isValidPayRate(PayRate) == false){
-                            System.out.println("Invalid payrate, please enter a valid payrate formatted as ($#,###.##): ");
-                            PayRate = scanner.nextLine();
-                            }  
+                            while (rgx.isValidPayRate(PayRate) == false) {
+                                System.out.println("Invalid payrate, please enter a valid payrate formatted as ($#,###.##): ");
+                                PayRate = scanner.nextLine();
+                            }
                             System.out.println("Please enter the astronauts weight in pounds: ");
                             Weight = scanner.nextDouble();
                             scanner.nextLine();
@@ -126,6 +135,7 @@ public class base {
                                 System.out.println("Invalid entry, please state if the astronaut is on Earth or in Space.");
                                 Status = scanner.nextLine();
                             }
+                            data.updateSerialNumber();
                             data.saveAstronautInfo(name, DateOfBirth, SerialNumber, Address, Email, PhoneNumber, PayRate, Weight, NextOfKin, Status);
                             break;
                         //edit astro by selected serial #
@@ -138,7 +148,7 @@ public class base {
                             System.out.println("Please enter the year(ex: 1986) the astronaut was born: ");
                             year = scanner.nextInt();
                             scanner.nextLine();
-                            while (year < 1900){
+                            while (year < 1900) {
                                 System.out.println("Invalid year, please enter a valid year: ");
                                 year = scanner.nextInt();
                                 scanner.nextLine();
@@ -147,39 +157,39 @@ public class base {
                             month = scanner.nextInt();
                             scanner.nextLine();
                             while (0 >= month || month > 12) {
-                            System.out.println("Invalid month choice, month must be between 1 and 12, please enter a valid month: ");
-                            month = scanner.nextInt();
-                            scanner.nextLine();
+                                System.out.println("Invalid month choice, month must be between 1 and 12, please enter a valid month: ");
+                                month = scanner.nextInt();
+                                scanner.nextLine();
                             }
                             System.out.println("Please enter the day the astronaut was born on:");
                             day = scanner.nextInt();
                             scanner.nextLine();
-                            while (day < 1 || day > 31){
-                            System.out.println("Invalid day, day must be between 1-31, please enter a valid day: ");
-                            day = scanner.nextInt();
-                            scanner.nextLine();
-                        }
-                        DateOfBirth = String.format("%02d/%02d/%04d", month, day, year);
+                            while (day < 1 || day > 31) {
+                                System.out.println("Invalid day, day must be between 1-31, please enter a valid day: ");
+                                day = scanner.nextInt();
+                                scanner.nextLine();
+                            }
+                            DateOfBirth = String.format("%02d/%02d/%04d", month, day, year);
                             System.out.println("Please enter the astronauts address: ");
                             Address = scanner.nextLine();
                             System.out.println("Please enter a valid Email: ");
                             Email = scanner.nextLine();
-                            while (rgx.isEmailValid(Email) == false){
-                            System.out.println("Invalid Email, please enter a valid Email: ");
-                            Email = scanner.nextLine();
+                            while (rgx.isEmailValid(Email) == false) {
+                                System.out.println("Invalid Email, please enter a valid Email: ");
+                                Email = scanner.nextLine();
                             }
                             System.out.println("Please enter a valid phone number: ");
                             PhoneNumber = scanner.nextLine();
-                            while (rgx.isValidPhoneNumber(PhoneNumber) == false){
+                            while (rgx.isValidPhoneNumber(PhoneNumber) == false) {
                                 System.out.println("Invalid Phone Number, please enter a valid Phone Number: ");
                                 PhoneNumber = scanner.nextLine();
                             }
-                            System.out.println("Please enter the new astronauts payrate: ");
+                            System.out.println("Please enter the astronauts payrate: ");
                             PayRate = scanner.nextLine();
-                            while (rgx.isValidPayRate(PayRate) == false){
-                            System.out.println("Invalid payrate, please enter a valid payrate formatted as ($#,###.##): ");
-                            PayRate = scanner.nextLine();
-                            }  
+                            while (rgx.isValidPayRate(PayRate) == false) {
+                                System.out.println("Invalid payrate, please enter a valid payrate formatted as ($#,###.##): ");
+                                PayRate = scanner.nextLine();
+                            }
                             System.out.println("Please enter the astronauts weight in pounds: ");
                             Weight = scanner.nextDouble();
                             scanner.nextLine();
@@ -195,7 +205,7 @@ public class base {
                             break;
                         //remove astro data but request confirmation
                         case 3:
-                            System.out.println("Please enter the serial number of the astronaut you wish to edit.");
+                            System.out.println("Please enter the serial number of the astronaut you wish to delete.");
                             SerialNumber = scanner.nextLine();
                             System.out.println("Are you sure you want to delete this astronaut data? 1 for yes, 2 for no.");
                             removalconfromation = scanner.nextInt();
@@ -206,7 +216,7 @@ public class base {
                             if (removalconfromation == 2) {
                                 break;
                             }
-                            while (removalconfromation != 1 && removalconfromation != 2){
+                            while (removalconfromation != 1 && removalconfromation != 2) {
                                 System.out.println("Thats not a valid choice");
                                 System.out.println("Are you sure you want to delete this astronaut data? 1 for yes, 2 for no.");
                             }
@@ -218,15 +228,15 @@ public class base {
                 //SPACESHIP MANAGEMENT
                 //Spaceship Options, 1.Add Spaceship 2.Assign Astros 3.Load Fuel
                 case 2:
-                System.out.println("Menu: \n1. Add Spaceship \n2. Assign Astros \n3. Load Fuel");
-                        innerChoice = scanner.nextInt();
-                        scanner.nextLine();
-                    if (choice <= 0 || choice > 3){
+                    System.out.println("Menu: \n1. Add Spaceship \n2. Assign Astros \n3. Load Fuel");
+                    innerChoice = scanner.nextInt();
+                    scanner.nextLine();
+                    if (choice <= 0 || choice > 3) {
                         System.out.println("Menu: \n1. Add Spaceship \n2. Assign Astros \n3. Load Fuel");
                         innerChoice = scanner.nextInt();
                         scanner.nextLine();
                     }
-                    switch (innerChoice){
+                    switch (innerChoice) {
                         //Add spaceship: get name, fuel capacity;
                         case 1:
                             System.out.println("Enter spaceship name: ");
@@ -238,9 +248,9 @@ public class base {
                         case 2:
                             System.out.println("Select spaceship to load astronauts onto:");
                             i = 0;
-                            while(i < spaceshipNum){
-                            System.out.println((i+1)+". "+spaceshipName);
-                            i++;
+                            while (i < spaceshipNum) {
+                                System.out.println((i + 1) + ". " + spaceshipName);
+                                i++;
                             }
                             shipSelector = scanner.nextInt();
                             scanner.nextLine();
@@ -249,31 +259,31 @@ public class base {
                         case 3:
                             System.out.println("Select ship to fuel: ");
                             i = 0;
-                            while (i < spaceshipNum){
-                            System.out.println(spaceshipNum+". "+spaceshipName);
+                            while (i < spaceshipNum) {
+                                System.out.println(spaceshipNum + ". " + spaceshipName);
                             }
                             shipSelector = scanner.nextInt();
                             scanner.nextLine();
-                            System.out.println("How much fuel do you want to put into "+spaceshipName+": ");
+                            System.out.println("How much fuel do you want to put into " + spaceshipName + ": ");
                             fuelAmount = scanner.nextDouble();
                             spaceship.loadFuel(fuelCapacity, fuelAmount, currentFuel);
-                            System.out.println(spaceshipName+" has been fueled. Current fuel level: "+currentFuel+" pounds. ");
+                            System.out.println(spaceshipName + " has been fueled. Current fuel level: " + currentFuel + " pounds. ");
                             break;
                     }
 
-                break;
+                    break;
                 //Launch Process
                 //Launch Countdown for a selected spaceship
                 //Countdown from 10 to 0 before launch.
                 //Space walk: when rocket above 70,000m, start 30sec timer(astros do spacewalk in said time.)
                 //Return to earth: Gravity, burn-up, parachute.
                 case 3:
-                System.out.println("Select ship to launch: ");
+                    System.out.println("Select ship to launch: ");
                     i = 0;
-                    while (i < spaceshipNum){
-                        System.out.println(spaceshipNum+". "+spaceshipName);
+                    while (i < spaceshipNum) {
+                        System.out.println(spaceshipNum + ". " + spaceshipName);
                         i++;
-                        }
+                    }
                     shipSelector = scanner.nextInt();
                     scanner.nextLine();
                     launch.launchCountdown();
@@ -287,23 +297,23 @@ public class base {
                     break;
                 //exit conformation
                 case 4:
-                        System.out.println("Are you sure you want to exit?");
-                        System.out.println("Enter 1 for yes, & 2 for no.");
-                        exitconfromation = scanner.nextInt();
-                        scanner.nextLine();
-                       if(exitconfromation == 1){
+                    System.out.println("Are you sure you want to exit?");
+                    System.out.println("Enter 1 for yes, & 2 for no.");
+                    exitconfromation = scanner.nextInt();
+                    scanner.nextLine();
+                    if (exitconfromation == 1) {
                         exit = true;
-                       } 
-                    if (exitconfromation == 2){
+                    }
+                    if (exitconfromation == 2) {
                         exit = false;
                     }
-                    if (exitconfromation != 1 && exitconfromation != 2){
+                    if (exitconfromation != 1 && exitconfromation != 2) {
                         System.out.println("Invalid option, try again");
                         System.out.println("Are you sure you want to exit?");
                         System.out.println("Enter 1 for yes, & 2 for no.");
                         exitconfromation = scanner.nextInt();
                         scanner.nextLine();
-                       }
+                    }
                     break;
             }
         } while (exit != true);
