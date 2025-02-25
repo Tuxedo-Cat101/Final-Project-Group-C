@@ -11,33 +11,34 @@ import java.util.Scanner;
 public class datastore2 {
 
     // Assigns the folder where serial numbers and astronaut data is entered.
+    @SuppressWarnings("unused")
     File serialfolder = new File("serialnumbers");
     File astrofolder = new File("astrodata");
+    File serials = new File("serialnumbers/serialnumber.txt");
     
     int numofAstros = search("astrodata");
 
     public void createFile() {
         String serialNumber = getSerialNumber();  // Get the serial number as a string
+        @SuppressWarnings("unused")
         File file = new File(this.astrofolder, serialNumber + ".txt"); // Create the file with the serial number
     }
 
     public String getSerialNumber() {
-        File serials = new File("serialnumbers/serialnumber.txt");
         int serialNumber = 420;  // Starting serial number
         String line;
         int i = 0;
         try {
             // Open the serialnumber.txt file for reading
-            Scanner myReader = new Scanner(serials);
-            line = myReader.nextLine();
+            Scanner myReader = new Scanner(this.serials);
             while (myReader.hasNextLine()) {
+                line = myReader.nextLine();
                 if (line != null || !line.equals("")) {
                     i = i + 10;
                 }
-                line = myReader.nextLine();
+                
 
             }
-            
             myReader.close();  // Close the scanner when done
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred: " + e.getMessage());
@@ -52,9 +53,11 @@ public class datastore2 {
             // Open the writer in append mode (true argument)
             writer.newLine(); // Start with a new line
             writer.write(serialnumber); // Write the new serial number
+            writer.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
     }
 
     // Method to save astronaut info to a file
@@ -139,13 +142,13 @@ public class datastore2 {
     // Method to delete astronaut information
     public void removeAstronautInfo(String serialNumber) throws FileNotFoundException {
         // Construct the filename from the serial number
-        File serials = new File("serialnumbers/serialnumber.txt");
+        
         String filename = "serialnumbers/serialnumber.txt";
         File data = new File("astrodata/" + serialNumber + ".txt");
         int numberToDelete = Integer.parseInt(serialNumber);
         // Create a temporary file to write the remaining numbers
         File tempFile = new File("serialnumbers/tempFile.txt");
-        Scanner serialFile = new Scanner(serials);
+        Scanner serialFile = new Scanner(this.serials);
         int numOfLines = 0;
         this.numofAstros = search("astrodata");
         boolean numberFound = false;
@@ -171,13 +174,16 @@ public class datastore2 {
                     // Empty line
                 }
             }
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        serialFile.close();
         if (numberFound = true){
             data.delete();
-            serials.delete();
-            tempFile.renameTo(serials);
+            this.serials.delete();
+            !Overwrite instead of rename
+            tempFile.renameTo(this.serials);
             System.out.println("Astronaut data successfully deleted.");
         } else{
             tempFile.delete();
