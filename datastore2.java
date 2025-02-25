@@ -13,7 +13,8 @@ public class datastore2 {
     // Assigns the folder where serial numbers and astronaut data is entered.
     File serialfolder = new File("serialnumbers");
     File astrofolder = new File("astrodata");
-    File serials = new File("serialnumbers/serialnumber.txt");
+    
+    int numofAstros = search("astrodata");
 
     public void createFile() {
         String serialNumber = getSerialNumber();  // Get the serial number as a string
@@ -21,21 +22,22 @@ public class datastore2 {
     }
 
     public String getSerialNumber() {
+        File serials = new File("serialnumbers/serialnumber.txt");
         int serialNumber = 420;  // Starting serial number
         String line;
         int i = 0;
         try {
             // Open the serialnumber.txt file for reading
-            Scanner myReader = new Scanner(this.serials);
+            Scanner myReader = new Scanner(serials);
             line = myReader.nextLine();
             while (myReader.hasNextLine()) {
-                if (line != null || !line.equals("")){
-                    i = i +10;
+                if (line != null || !line.equals("")) {
+                    i = i + 10;
                 }
                 line = myReader.nextLine();
-                
-                
+
             }
+            
             myReader.close();  // Close the scanner when done
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred: " + e.getMessage());
@@ -44,20 +46,15 @@ public class datastore2 {
     }
 
     public void updateSerialNumber() {
-        String serialnumber = getSerialNumber();
-        String line;
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(this.serials))){
-            Scanner myReader = new Scanner(this.serials);
-            while (myReader.hasNextLine()){
-                line = myReader.nextLine();
-            }
-            writer.newLine();
-            writer.write(serialnumber);
-            writer.close();
+        String serialnumber = getSerialNumber(); // Assuming this returns the serial number
+        File serials = new File("serialnumbers/serialnumber.txt");
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(serials, true))) {
+            // Open the writer in append mode (true argument)
+            writer.newLine(); // Start with a new line
+            writer.write(serialnumber); // Write the new serial number
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     // Method to save astronaut info to a file
@@ -140,28 +137,67 @@ public class datastore2 {
     }
 
     // Method to delete astronaut information
-    public void removeAstronautInfo(String serialNumber) {
-        String filename = "astrodata/" + serialNumber + ".txt";
-        File file = new File(filename);
-        String line;
-        if (file.delete()) {
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(this.serials))){
-                Scanner myReader = new Scanner(this.serials);
-                line = myReader.nextLine();
-                while (!line.equals(serialNumber)){
-                    line = myReader.nextLine();
+    public void removeAstronautInfo(String serialNumber) throws FileNotFoundException {
+        // Construct the filename from the serial number
+        File serials = new File("serialnumbers/serialnumber.txt");
+        String filename = "serialnumbers/serialnumber.txt";
+        File data = new File("astrodata/" + serialNumber + ".txt");
+        int numberToDelete = Integer.parseInt(serialNumber);
+        // Create a temporary file to write the remaining numbers
+        File tempFile = new File("serialnumbers/tempFile.txt");
+        Scanner serialFile = new Scanner(serials);
+        int numOfLines = 0;
+        this.numofAstros = search("astrodata");
+        boolean numberFound = false;
+        try (
+            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+            String line;
+            // Read the file line by line
+            while (serialFile.hasNextLine()) {
+                numOfLines++;
+                line = serialFile.nextLine();
+                try {
+                    if (numberToDelete != Integer.parseInt(line)) {
+                        writer.write(line);
+                        if (numOfLines < this.numofAstros) {
+                            writer.write("\n");
+                        }
+                    }
+                    if (numberToDelete == Integer.parseInt(line)){
+                        numberFound = true;
+                    }
+                } catch (Exception e) {
+                    // Stuff is broke here
+                    // Empty line
                 }
-                if (line.equals(serialNumber)){
-                    writer.write("");
-                }
-                writer.close();
-            } catch (Exception e) {
-                e.printStackTrace();
             }
-            System.out.println("Astronaut information removed.");
-        } else {
-            System.out.println("Error: Could not remove astronaut information.");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        if (numberFound = true){
+            data.delete();
+            serials.delete();
+            tempFile.renameTo(serials);
+            System.out.println("Astronaut data successfully deleted.");
+        } else{
+            tempFile.delete();
+            System.out.println("Astronaut with that serial number not found.");
+        }
+    }
+
+    public static int search(String folderpath) {
+        File directory = new File(folderpath);
+        int numberOfFiles = 0;
+        for (File element : directory.listFiles()) {
+            if (element.isDirectory()) {
+                //add the number of files of subfolder
+                numberOfFiles += search(element.getAbsolutePath());
+            } else {
+                numberOfFiles++;
+            }
+        }
+        //return number of files found
+        return numberOfFiles;
     }
 
 }
