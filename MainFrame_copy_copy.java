@@ -19,46 +19,52 @@ public class MainFrame_copy_copy {
         } else if ("admin".equals(mode)) {
             handleAdminMode();
         } else {
-            System.out.println("Invalid mode selected.");
+            System.out.println("Invalid mode selected. Exiting program.");
+            System.exit(1);  // Exit the program if an invalid mode is selected
         }
     }
 
-    // Handle User Mode
-    private static void handleUserMode() {
-        System.out.println("User Mode: Verify or Generate password.");
+            // Handle User Mode
+        private static void handleUserMode() {
+            System.out.println("User Mode: Verify or Generate password.");
 
-        // Ask for user password input
-        System.out.print("Enter User password: ");
-        String enteredPassword = System.console().readLine();  // Read password from console
+            // Ask for user password input
+            System.out.print("Enter User password: ");
+            String enteredPassword = System.console().readLine();  // Read password from console
 
-        String userPassword = readUserPassword();
-        if (userPassword == null) {
-            System.out.println("No existing user password found.");
+            String userPassword = readUserPassword();
+            if (userPassword == null) {
+                System.out.println("No existing user password found.");
 
-            // Generate a new random password
-            String generatedPassword = generatePassword();
-            System.out.println("Generated Password: " + generatedPassword);
+                // Generate a new random password
+                String generatedPassword = generatePassword();
+                System.out.println("Generated Password: " + generatedPassword);
 
-            // Encrypt and store the generated password
-            storeUserPassword(generatedPassword);
-            System.out.println("New password stored and encrypted.");
+                // Encrypt and store the generated password
+                storeUserPassword(generatedPassword);
+                System.out.println("New password stored and encrypted.");
 
-            // Now, we read the encrypted password from the file, and then decrypt it
-            try {
-                String encryptedPassword = readUserPassword();  // Read the encrypted password
-                String decryptedPassword = decryptPassword(encryptedPassword);  // Decrypt it
-                System.out.println("Decrypted Password: " + decryptedPassword);
-            } catch (Exception e) {
-                System.out.println("Error decrypting password: " + e.getMessage());
-            }
-        } else {
-            if (verifyUserPassword(enteredPassword)) {
-                System.out.println("Access granted... Accessing system.");
+                // Now, we read the encrypted password from the file, and then decrypt it
+                try {
+                    String encryptedPassword = readUserPassword();  // Read the encrypted password
+                    String decryptedPassword = decryptPassword(encryptedPassword);  // Decrypt it
+                    System.out.println("Decrypted Password: " + decryptedPassword);
+                } catch (Exception e) {
+                    System.out.println("Error decrypting password: " + e.getMessage());
+                }
+
+                // Exit the system after password is generated and stored
+                System.exit(0);
             } else {
-                System.out.println("Incorrect password. Access denied.");
+                if (verifyUserPassword(enteredPassword)) {
+                    System.out.println("Access granted... Accessing system.");
+                } else {
+                    System.out.println("Incorrect password. Access denied.");
+                    System.exit(1);  // Exit the program if password is incorrect
+                }
             }
         }
-    }
+
 
     // Handle Admin Mode
     private static void handleAdminMode() {
@@ -79,7 +85,8 @@ public class MainFrame_copy_copy {
             System.out.println("Greetings Professor Falken... Shall we play a game?");
             resetUserPassword();
         } else {
-            System.out.println("Incorrect admin password.");
+            System.out.println("Incorrect admin password. Exiting program.");
+            System.exit(1);  // Exit the program if the admin password is incorrect
         }
     }
 

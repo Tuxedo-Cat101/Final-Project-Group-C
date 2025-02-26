@@ -29,6 +29,7 @@ public class base {
         int removalconfromation;
         String spaceshipName = "";
         Double fuelCapacity = 0.0;
+        int shipAstroCapacity;
         int spaceshipNum = 0;
         int shipSelector;
         double fuelAmount;
@@ -246,8 +247,12 @@ public class base {
                         case 1:
                             System.out.println("Enter spaceship name: ");
                             spaceshipName = scanner.nextLine();
+                            System.out.println("Enter how many astronauts the ship can hold: ");
+                            shipAstroCapacity = scanner.nextInt();
+                            scanner.nextLine();
                             System.out.println("Enter the spaceships fuel capacity in pounds: ");
                             fuelCapacity = scanner.nextDouble();
+                            data.saveSpaceShipData(spaceshipName.trim().toLowerCase(), fuelCapacity, shipAstroCapacity);
                             break;
                         //Add astros function
                         case 2:
