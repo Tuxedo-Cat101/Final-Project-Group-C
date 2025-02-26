@@ -1,0 +1,10 @@
+Serial Number: 420
+Name: James
+Date of Birth: 01/01/1999
+Address: N11
+Email: jam@gmail.com
+Phone Number: 989-111-1111
+Pay Rate: $1.00
+Weight: 120.0
+Next of Kin: akd
+Status: earth
