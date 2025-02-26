@@ -1,110 +1,85 @@
-import java.awt.*;
 import java.io.*;
 import java.security.SecureRandom;
 import java.util.Base64;
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
-import javax.swing.*;
-//foot
-public class MainFrame_copy_copy extends JFrame {
+
+public class MainFrame_copy_copy {
     private static final String USER_PASSWORD_FILE = "user_password.txt";
     private static final String ADMIN_PASSWORD_FILE = "admin_password.txt";
     private static final String ENCRYPTION_KEY = "0123456789abcdef";  // 16-byte key for AES
 
-    private final Font mainFont = new Font("Segoe print", Font.BOLD, 18);
-    private JTextField tfPassword, tfAdminPassword;
-    private JTextArea taMessage;
+    public static void main(String[] args) {
+        // Ask if user or admin mode is chosen
+        System.out.print("Enter 'user' for User Mode or 'admin' for Admin Mode: ");
+        String mode = System.console().readLine().trim().toLowerCase();
 
-    public MainFrame_copy_copy() {
-        setTitle("W.O.P.R Joshua");
-        setSize(500, 600);
-        setMinimumSize(new Dimension(300, 400));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        initialize();
-    }
-
-    public void initialize() {
-        /*************** Main Panel ***************/
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
-        mainPanel.setBackground(new Color(139, 0, 0));
-
-        /*************** Message Area ***************/
-        taMessage = new JTextArea();
-        taMessage.setFont(mainFont);
-        taMessage.setEditable(false);
-        taMessage.setText("Identification needed \nUser or Admin Mode.");
-        JScrollPane scrollPane = new JScrollPane(taMessage);
-        mainPanel.add(scrollPane, BorderLayout.CENTER);
-
-        /*************** Button Panel ***************/
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout());
-
-        JButton btnUserMode = new JButton("User");
-        btnUserMode.setFont(mainFont);
-        btnUserMode.addActionListener(e -> handleUserMode());
-
-        JButton btnAdminMode = new JButton("Admin");
-        btnAdminMode.setFont(mainFont);
-        btnAdminMode.addActionListener(e -> handleAdminMode());
-
-        buttonPanel.add(btnUserMode);
-        buttonPanel.add(btnAdminMode);
-
-        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
-
-        getContentPane().add(mainPanel);
-        setVisible(true);
-    }
-
-   // Handle User Mode
-private void handleUserMode() {
-    taMessage.setText("User Mode: Verify or Generate password.\n");
-
-    String userPassword = readUserPassword();
-    if (userPassword == null) {
-        String generatedPassword = generatePassword();
-        taMessage.append("Generated Password: " + generatedPassword + "\n");
-
-        // Encrypt and store the password
-        storeUserPassword(generatedPassword);
-
-        // Now read the encrypted password from the file, and then decrypt it
-        try {
-            String encryptedPassword = readUserPassword();  // Read the encrypted password
-            String decryptedPassword = decryptPassword(encryptedPassword);  // Decrypt it
-            taMessage.append("Decrypted Password: " + decryptedPassword + "\n");
-        } catch (Exception e) {
-            taMessage.append("Error decrypting password: " + e.getMessage() + "\n");
-        }
-    } else {
-        String enteredPassword = JOptionPane.showInputDialog(this, "Enter password:");
-        if (verifyUserPassword(enteredPassword)) {
-            taMessage.append("Access granted... Accessing: \n");
+        if ("user".equals(mode)) {
+            handleUserMode();
+        } else if ("admin".equals(mode)) {
+            handleAdminMode();
         } else {
-            taMessage.append("Incorrect password. Access denied.\n");
+            System.out.println("Invalid mode selected.");
         }
     }
-}
+
+    // Handle User Mode
+    private static void handleUserMode() {
+        System.out.println("User Mode: Verify or Generate password.");
+
+        // Ask for user password input
+        System.out.print("Enter User password: ");
+        String enteredPassword = System.console().readLine();  // Read password from console
+
+        String userPassword = readUserPassword();
+        if (userPassword == null) {
+            System.out.println("No existing user password found.");
+
+            // Generate a new random password
+            String generatedPassword = generatePassword();
+            System.out.println("Generated Password: " + generatedPassword);
+
+            // Encrypt and store the generated password
+            storeUserPassword(generatedPassword);
+            System.out.println("New password stored and encrypted.");
+
+            // Now, we read the encrypted password from the file, and then decrypt it
+            try {
+                String encryptedPassword = readUserPassword();  // Read the encrypted password
+                String decryptedPassword = decryptPassword(encryptedPassword);  // Decrypt it
+                System.out.println("Decrypted Password: " + decryptedPassword);
+            } catch (Exception e) {
+                System.out.println("Error decrypting password: " + e.getMessage());
+            }
+        } else {
+            if (verifyUserPassword(enteredPassword)) {
+                System.out.println("Access granted... Accessing system.");
+            } else {
+                System.out.println("Incorrect password. Access denied.");
+            }
+        }
+    }
+
     // Handle Admin Mode
-    private void handleAdminMode() {
-        taMessage.setText("Enter Admin to reset W.O.P.R.\n");
+    private static void handleAdminMode() {
+        System.out.println("Enter Admin to reset W.O.P.R.");
 
         String adminPassword = readAdminPassword();
         if (adminPassword == null) {
-            String enteredPassword = JOptionPane.showInputDialog(this, "Set Admin:");
+            System.out.print("Set Admin password: ");
+            String enteredPassword = System.console().readLine();  // Set the admin password
             storeAdminPassword(enteredPassword);
-            taMessage.append("Admin password set successfully.\n");
+            System.out.println("Admin password set successfully.");
         }
 
-        String enteredAdminPassword = JOptionPane.showInputDialog(this, "Enter Admin password:");
+        System.out.print("Enter Admin password: ");
+        String enteredAdminPassword = System.console().readLine();  // Read admin password from console
         if (verifyAdminPassword(enteredAdminPassword)) {
-            taMessage.append("Admin access granted... Acessing W.O.P.R\n");
-            taMessage.append("Greetings Professor Falken... Shall we play a game?\n");
+            System.out.println("Admin access granted... Accessing W.O.P.R");
+            System.out.println("Greetings Professor Falken... Shall we play a game?");
             resetUserPassword();
         } else {
-            taMessage.append("Incorrect admin password.\n");
+            System.out.println("Incorrect admin password.");
         }
     }
 
@@ -204,13 +179,10 @@ private void handleUserMode() {
     }
 
     // Reset the user password by the admin
-    public void resetUserPassword() {
-        String newPassword = JOptionPane.showInputDialog(this, "New Password: ");
+    public static void resetUserPassword() {
+        System.out.print("New Password: ");
+        String newPassword = System.console().readLine();  // Read new password from console
         storeUserPassword(newPassword);
-        taMessage.append("Password changed \n");
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new MainFrame_copy_copy());
+        System.out.println("Password changed");
     }
 }

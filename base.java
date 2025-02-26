@@ -6,6 +6,9 @@ import java.util.Scanner;
 public class base {
 
     public static void main(String[] args) throws FileNotFoundException {
+        
+        MainFrame_copy_copy.main(args);
+        
         Scanner scanner = new Scanner(System.in);
         String name;
         String DateOfBirth;
@@ -136,8 +139,9 @@ public class base {
                                 System.out.println("Invalid entry, please state if the astronaut is on Earth or in Space.");
                                 Status = scanner.nextLine();
                             }
-                            data.updateSerialNumber();
-                            data.saveAstronautInfo(name, DateOfBirth, SerialNumber, Address, Email, PhoneNumber, PayRate, Weight, NextOfKin, Status);
+                            if (data.saveAstronautInfo(name, DateOfBirth, SerialNumber, Address, Email, PhoneNumber, PayRate, Weight, NextOfKin, Status)){
+                                data.updateSerialNumber(SerialNumber);
+                            }
                             break;
                         //edit astro by selected serial #
                         case 2:

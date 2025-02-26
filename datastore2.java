@@ -28,26 +28,20 @@ public class datastore2 {
         int serialNumber = 420;  // Starting serial number
         String line;
         int i = 0;
-        try {
-            // Open the serialnumber.txt file for reading
-            Scanner myReader = new Scanner(this.serials);
-            while (myReader.hasNextLine()) {
-                line = myReader.nextLine();
-                if (line != null || !line.equals("")) {
-                    i = i + 10;
-                }
-                
-
+        boolean finish = true;
+        while (finish) {
+            if(new File("astrodata/"+serialNumber+".txt").exists()){
+                serialNumber = serialNumber + 10;
+            }else{
+                finish = false;
             }
-            myReader.close();  // Close the scanner when done
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred: " + e.getMessage());
         }
-        return Integer.toString(serialNumber + i);  // Return the updated serial number as a string
+        return Integer.toString(serialNumber);
+
     }
 
-    public void updateSerialNumber() {
-        String serialnumber = getSerialNumber(); // Assuming this returns the serial number
+    public void updateSerialNumber(String Serialnumber) {
+        String serialnumber = Serialnumber;
         File serials = new File("serialnumbers/serialnumber.txt");
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(serials, true))) {
             // Open the writer in append mode (true argument)
@@ -56,17 +50,16 @@ public class datastore2 {
             writer.close();
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        
+        } 
     }
-
     // Method to save astronaut info to a file
-    public static void saveAstronautInfo(String name, String DateOfBirth, String serialNumber, String Address, String Email,
+    public static boolean saveAstronautInfo(String name, String DateOfBirth, String serialNumber, String Address, String Email,
             String PhoneNum, String PayRate, double Weight, String NextOfKin, String Status) {
         String filename = "astrodata/" + serialNumber + ".txt";
         File file = new File(filename);
         if (file.exists()) {
             System.out.println("Astronaut with that serial number already exists.");
+            return false;
         } else {
             String astronautInfo
                     = "Serial Number: " + serialNumber + "\n"
@@ -87,7 +80,8 @@ public class datastore2 {
                 System.err.println("An error occurred while saving astronaut info.");
                 e.printStackTrace();
             }
-        }
+            return true;
+        } 
     }
 
     // Method to read astronaut info from a file and display it
@@ -179,12 +173,15 @@ public class datastore2 {
             e.printStackTrace();
         }
         serialFile.close();
-        if (numberFound = true){
+        if (numberFound){
             data.delete();
             this.serials.delete();
-            !Overwrite instead of rename
-            tempFile.renameTo(this.serials);
-            System.out.println("Astronaut data successfully deleted.");
+            boolean success = tempFile.renameTo(this.serials);
+            if (success) {
+                System.out.println("Astronaut data successfully deleted and file renamed.");
+            } else {
+                System.out.println("Failed to rename the file.");
+            }
         } else{
             tempFile.delete();
             System.out.println("Astronaut with that serial number not found.");
