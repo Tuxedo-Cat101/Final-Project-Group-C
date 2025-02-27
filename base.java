@@ -21,7 +21,6 @@ public class base {
         double Weight;
         String NextOfKin;
         String Status;
-        int i = 0;
         boolean exit = false;
         int choice = 0;
         int innerChoice;
@@ -31,7 +30,6 @@ public class base {
         Double fuelCapacity = 0.0;
         int shipAstroCapacity;
         int spaceshipNum = 0;
-        int shipSelector;
         double fuelAmount;
         double currentFuel = 0.0;
 
@@ -40,6 +38,8 @@ public class base {
         spaceship spaceship = new spaceship();
         launch launch = new launch();
         datastore2 data = new datastore2();
+
+        data.startupcheck();
 
 //Password  
         //First run generates password
@@ -234,11 +234,11 @@ public class base {
                 //SPACESHIP MANAGEMENT
                 //Spaceship Options, 1.Add Spaceship 2.Assign Astros 3.Load Fuel
                 case 2:
-                    System.out.println("Menu: \n1. Add Spaceship \n2. Assign Astros \n3. Load Fuel");
+                    System.out.println("Menu: \n1. Add Spaceship \n2. Assign Astronauts \n3. Load Fuel");
                     innerChoice = scanner.nextInt();
                     scanner.nextLine();
                     if (choice <= 0 || choice > 3) {
-                        System.out.println("Menu: \n1. Add Spaceship \n2. Assign Astros \n3. Load Fuel");
+                        System.out.println("Menu: \n1. Add Spaceship \n2. Assign Astronauts \n3. Load Fuel");
                         innerChoice = scanner.nextInt();
                         scanner.nextLine();
                     }
@@ -252,28 +252,25 @@ public class base {
                             scanner.nextLine();
                             System.out.println("Enter the spaceships fuel capacity in pounds: ");
                             fuelCapacity = scanner.nextDouble();
-                            data.saveSpaceShipData(spaceshipName.trim().toLowerCase(), fuelCapacity, shipAstroCapacity);
+                            data.saveSpaceShipData(spaceshipName, fuelCapacity, shipAstroCapacity);
                             break;
                         //Add astros function
                         case 2:
-                            System.out.println("Select spaceship to load astronauts onto:");
-                            i = 0;
-                            while (i < spaceshipNum) {
-                                System.out.println((i + 1) + ". " + spaceshipName);
-                                i++;
-                            }
-                            shipSelector = scanner.nextInt();
-                            scanner.nextLine();
+                            System.out.println("Enter spaceship name to load astronauts onto:");
+                            data.readSpaceshipNames();
+                            spaceshipName = scanner.nextLine();
+                            
+                             System.out.print("Enter the serial number of the astronaut to add: ");
+                             String selectedSerialNumber = scanner.nextLine().trim();
+
+
                             break;
                         //Fuels ship based on input with method in spaceship
                         case 3:
-                            System.out.println("Select ship to fuel: ");
-                            i = 0;
-                            while (i < spaceshipNum) {
-                                System.out.println(spaceshipNum + ". " + spaceshipName);
-                            }
-                            shipSelector = scanner.nextInt();
-                            scanner.nextLine();
+                            System.out.println("Enter spaceship name to fuel: ");
+                            data.readSpaceshipNames();
+                            spaceshipName = scanner.nextLine();
+
                             System.out.println("How much fuel do you want to put into " + spaceshipName + ": ");
                             fuelAmount = scanner.nextDouble();
                             spaceship.loadFuel(fuelCapacity, fuelAmount, currentFuel);
@@ -288,13 +285,8 @@ public class base {
                 //Space walk: when rocket above 70,000m, start 30sec timer(astros do spacewalk in said time.)
                 //Return to earth: Gravity, burn-up, parachute.
                 case 3:
-                    System.out.println("Select ship to launch: ");
-                    i = 0;
-                    while (i < spaceshipNum) {
-                        System.out.println(spaceshipNum + ". " + spaceshipName);
-                        i++;
-                    }
-                    shipSelector = scanner.nextInt();
+                    System.out.println("Select spaceship to launch: ");
+                    data.readSpaceshipNames();
                     scanner.nextLine();
                     launch.launchCountdown();
                     System.out.println(launch.launch(fuelCapacity, currentFuel));
