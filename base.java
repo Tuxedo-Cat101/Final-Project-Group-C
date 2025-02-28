@@ -470,13 +470,14 @@ public class base {
                     }
                     if (data.check(spaceshipName)) {
                         launch.launchCountdown();
-                        System.out.println(launch.launch(data.getCurrentFuel(spaceshipName), spaceshipName));
-                        System.out.println("Press Enter to start spacewalk: ");
-                        scanner.nextLine();
-                        launch.SpaceWalk();
-                        System.out.println("Preparing ship returnal, Press Enter to start re-entry to Earth");
-                        scanner.nextLine();
-                        System.out.print(launch.returnal());
+                        if (launch.launch(data.getCurrentFuel(spaceshipName), spaceshipName)) {
+                            System.out.println("Press Enter to start spacewalk: ");
+                            scanner.nextLine();
+                            launch.SpaceWalk();
+                            System.out.println("Preparing ship returnal, Press Enter to start re-entry to Earth");
+                            scanner.nextLine();
+                            System.out.print(launch.returnal(spaceshipName));
+                        }
                     } else{
                         System.err.println("Requirements to launch not met. Please meet requirements and then try again.");
                     }
