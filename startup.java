@@ -3,6 +3,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+//Ensures neccessary files exist and if not creates them.
 public class startup {
     public void startupcheck(){
         if (new File("serialnumbers").exists()){

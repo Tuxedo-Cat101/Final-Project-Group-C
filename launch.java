@@ -83,6 +83,7 @@ public class launch {
         while (altitude > 10000) {
             speed = speed - 9.81;
             altitude = altitude + speed;
+            //If speed excedes 3000 ship burns up and is deleted.
             if (speed > 3000) {
                 file.delete();
                 return "Spacecraft burned up on re-entry due to excessive speed.";
@@ -107,6 +108,7 @@ public class launch {
                 Thread.currentThread().interrupt();
             }
         }
+        //If speed excedes 3000 ship burns up and is deleted.
         if (speed > 3000) {
             file.delete();
             return "Spacecraft burned up on re-entry due to excessive speed.";

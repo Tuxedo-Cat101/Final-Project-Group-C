@@ -49,6 +49,7 @@ public class datastore2 {
         }
     }
 
+    //Finds what the serialnumber is with incrementation
     public String getSerialNumber() {
         int serialNumber = 420;  // Starting serial number
         File file = new File("serialnumbers/serialnumber.txt");
@@ -80,6 +81,7 @@ public class datastore2 {
         }
     }
 
+    //Writes incremented serialnumber into serialnumber.txt
     public void updateSerialNumber(String serialnumber) {
         File serials = new File("serialnumbers/serialnumber.txt");
     
@@ -341,6 +343,7 @@ public class datastore2 {
         }
     }
 
+    //Finds how many astronauts in total there are
     public static int search() {
         File directory = new File("unassignedastros");
         File file = new File("assignedastros");
@@ -390,7 +393,7 @@ public class datastore2 {
         }
     }
 
-
+    //Displays spaceship info
     public static void readSpaceshipInfo(String spaceshipName) {
         String filename = "spaceshipdata/" + spaceshipName + ".txt";
         File file = new File(filename);
@@ -409,6 +412,7 @@ public class datastore2 {
         }
     }
 
+    //Displays all spaceship names
     public static void readSpaceshipNames(){
         String filename = "spaceshipdata";
         File file = new File(filename);
@@ -419,6 +423,7 @@ public class datastore2 {
         }
     }
     
+    //Loads astronauts onto selected spaceship but not over the ships capactiy
     public static void loadAstros(String spaceshipName) {
         int i = getCurrentCrew(spaceshipName);
         int crewCount = 0;
@@ -452,6 +457,8 @@ public class datastore2 {
             System.out.println("No spaceship with that name exists.");
         }
     }
+
+    //Gets spaceships astronaut capacity
     public static int getShipCapacity(String spaceshipName){
         String filename = "spaceshipdata/"+ spaceshipName+".txt";
         File file = new File(filename);
@@ -476,6 +483,7 @@ public class datastore2 {
 
     }
 
+    //Gets spaceships fuel capacity
     public static double getShipFuelCapacity(String spaceshipName){
         String filename = "spaceshipdata/"+ spaceshipName+".txt";
         File file = new File(filename);
@@ -499,6 +507,7 @@ public class datastore2 {
         return 0.0;
     }
 
+    //Gets the spaceships current fuel
     public static double getCurrentFuel(String spaceshipName){
         String filename = "spaceshipdata/"+ spaceshipName+".txt";
         File file = new File(filename);
@@ -522,6 +531,7 @@ public class datastore2 {
         return 0.0;
     }
 
+    //Gets how many assigned astros a ship has.
     public static int getCurrentCrew(String spaceshipName){
         String filename = "spaceshipdata/"+ spaceshipName+".txt";
         File file = new File(filename);
@@ -545,6 +555,7 @@ public class datastore2 {
         return 0;
     }
 
+    //Sets how many assigend astros a ship has
     public static void setCurrentCrew(String spaceshipName, int crew){
         String filePath = "spaceshipdata/"+spaceshipName+".txt";
         int lineNumber = 5; // Line number to modify (1-based index)
@@ -568,6 +579,7 @@ public class datastore2 {
         }
     }
 
+    //Sets the ships current fuel
     public static void setCurrentFuel(double loadFuel, String spaceshipName){
         String filePath = "spaceshipdata/"+spaceshipName+".txt";
         int lineNumber = 4; // Line number to modify (1-based index)
@@ -594,6 +606,7 @@ public class datastore2 {
         }
     }
 
+    //Makes sure ship meets requirements to launch
     public static boolean check(String spaceshipName){
         File file = new File("assignedastros");
         int numberOfFiles = 0;
